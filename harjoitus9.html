@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        .main {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+        .fetchButton {
+            border: 1px solid black;
+            background-color: red;
+            border-radius: 10px;
+            height: 50px;
+            width: 300px;
+            font-size: 150%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+        .flip-card {
+            background-color: transparent;
+            width: 400px;
+            height: 300px;
+            border: 1px solid black;
+            border-radius: 10px;
+            perspective: 1000px; /* Remove this if you don't want the 3D effect */
+        }
+        /* This container is needed to position the front and back side */
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        /* Do an horizontal flip when you move the mouse over the flip box container */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        /* Position the front and back side */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+        }
+        /* Style the front side (fallback if image is missing) */
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+            border-radius: 10px;
+        }
+        /* Style the back side */
+        .flip-card-back {
+            background-color: dodgerblue;
+            color: white;
+            border-radius: 10px;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+    function App() {
+        let [data, setData] = React.useState([]);
+        React.useEffect(() => {
+            Profiles();
+        }, []);
+        function Profiles() {
+            fetch(`https://random-data-api.com/api/users/random_user?size=10`)
+            .then((response) => {
+                return response.json();
+            }).then((profiles) => {
+                console.log(profiles);
+                setData(profiles);
+                console.log(data);
+            })
+        }
+
+        function List() {
+            const listItems = data.map((element) =>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src={element.avatar} alt="Avatar"  style={{width:'200px', height:'200px'}}/>
+                        <h3>{element.first_name + " " + element.last_name}</h3>
+                        <p>{element.employment.title}</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <p>Address: {element.address.street_address + ", " + element.address.street_name + ", " + element.address.city}</p>
+                        <p>{element.email}</p>
+                        <p>{element.phone_number}</p>
+                    </div>
+                </div>
+            </div>
+            );
+            return (
+                <div class="grid-container">{listItems}</div>
+            );
+        }
+
+        return (
+            <div class="main">
+                <button class="fetchButton" onClick={Profiles}>Fetch random</button>
+                <List/>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<App/>, document.getElementById("root"));
+</script>
+</body>
+</html>

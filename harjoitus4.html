@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    
+    function Add() {
+        let myarray = React.useState(0);
+        let result = myarray[0];
+        let setResult = myarray[1];
+
+        const click = () => {
+            result++;
+            setResult(result);
+        };
+
+        return (
+            <div>
+                <p>Button has been clicked: {result} times</p>
+                <button onClick={click}>Click Me</button>
+            </div>
+        );
+    }
+    ReactDOM.render(<Add/>, document.getElementById("root"));
+</script>
+</body>
+</html>

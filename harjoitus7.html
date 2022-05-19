@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    
+    function App() {
+        let myarray = React.useState(5);
+        let result = myarray[0];
+        let setResult = myarray[1];
+
+        const Name = () => {
+            let number1 = document.getElementById("first").value;
+            let number2 = document.getElementById("last").value;
+            setResult(number1 + " " + number2);
+        }
+
+        function Greeting() {
+            window.alert(`Hello ${result}!`);
+        }
+
+        return (
+            <div>
+                <form>
+                    <input type="text" id="first" placeholder="First name" onChange={Name}/><br/>
+                    <input type="text" id="last" placeholder="Last name" onChange={Name}/>
+                </form>
+                <button onClick={Greeting}>Greet me!</button>
+            </div>
+        );
+    }
+    ReactDOM.render(<App/>, document.getElementById("root"));
+</script>
+</body>
+</html>

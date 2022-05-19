@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<head>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+        .joke {
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+            width: 400px;
+        }
+        p, h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    //
+    const Data = (
+        [
+            {
+                id: '1',
+                setup: "What's the best thing about a Boolean?",
+                punchline: "Even if you're wrong, you're only off by a bit"
+            },
+            {
+                id: '2',
+                setup: 'Why do programmers wear glasses?',
+                punchline: 'Because they need to C#'
+            }
+        ]
+    )
+    function List(props) {
+        const data = props.data;
+        const listItems = data.map((element) =>
+        <div class="joke">
+            <h3>{element.setup}</h3>
+            <p>{element.punchline + '.'}</p>
+        </div>
+        );
+        return (
+            <div class="grid-container">{listItems}</div>
+        );
+    }
+    ReactDOM.render(
+        <List data={Data}/>, document.getElementById('root')
+    );
+    //
+</script>
+</body>
+</html>

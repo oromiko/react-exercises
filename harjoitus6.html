@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<head>
+    <style>
+        th, td {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    //
+    function List(props) {
+        const list = props.list;
+        const listItems = list.map((element) =>
+        <tr>
+            <td>{element}</td>
+        </tr>
+        );
+        return (
+            <table>{listItems}</table>
+        );
+    }
+    ReactDOM.render(
+        <List list={['dog', 'cat', 'chicken', 'cow', 'sheep', 'horse']}/>, document.getElementById('root')
+    );
+    //
+</script>
+</body>
+</html>
